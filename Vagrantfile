@@ -63,8 +63,27 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    # install java runtime environment
+    apt-get install -y default-jre
+    # install docker
+    apt-get install -y docker.io
+    # add nexus docker repo to daemon.json and restart docker
+    echo -e '{\n  "insecure-registries" : ["ubuntu-bionic:8082"]\n}' > /etc/docker/daemon.json
+    systemctl restart docker
+    # add repo and install jenkins
+    curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee   /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+    echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]   https://pkg.jenkins.io/debian-stable binary/ | sudo tee   /etc/apt/sources.list.d/jenkins.list > /dev/null
+    apt-get update -o Acquire::https::Verify-Peer=false
+    apt-get -y -o Acquire::https::Verify-Peer=false install jenkins
+    # jenkins user should be able to use docker
+    usermod -a -G docker jenkins
+    systemctl restart jenkins
+    # pull nexus image in advance
+    docker pull sonatype/nexus3
+
+    echo -e "192.168.56.10\tubuntu-bionic\tubuntu-bionic" >> /etc/hosts
+  SHELL
 end
