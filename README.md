@@ -12,6 +12,7 @@ docker exec -t nexus bash -c 'cat /nexus-data/admin.password && echo'
 
 # Jenkins
 
+Jenkins url: http://192.168.56.10:8080/
 Repo url: https://github.com/kozl/netology-devops.git
 
 ## Install go
