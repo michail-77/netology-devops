@@ -48,6 +48,13 @@ object Build : BuildType({
     params {
         param("dockerImageName", "hello-world")
     }
+
+    triggers {
+        vcs {
+            id = "TRIGGER_2"
+            branchFilter = "+:<default>"
+        }
+    }
 })
 
 object Test : BuildType({
@@ -94,8 +101,8 @@ object BuildDocker : Template({
 
     params {
         param("dockerImageName", "")
-        param("dockerRegistryUser", "docker")
         password("dockerRegistryPassword", "credentialsJSON:dda34e18-1ef7-4b0c-89b8-92127353f015", display = ParameterDisplay.HIDDEN)
+        param("dockerRegistryUser", "docker")
     }
 
     vcs {
