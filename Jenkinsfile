@@ -15,12 +15,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build . -t ubuntu-bionic:8082/hello-world:test'
-      }
-    }
-    stage('Push') {
-      steps {
-        sh 'docker login ubuntu-bionic:8082 -u admin -p admin && docker push ubuntu-bionic:8082/hello-world:test && docker logout'
+        sh 'go build'
       }
     }
   }
