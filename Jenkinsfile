@@ -19,7 +19,7 @@ pipeline {
         }
     stage('Compile') {
       steps {
-        sh 'CGO_ENABLED=0 GOOS=linux go build -a -buildvcs=false -installsuffix nocgo -o outfile.go'
+        sh 'CGO_ENABLED=0 GOOS=linux go build -a -o outfile.go'
            }
         }  
       
