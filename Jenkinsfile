@@ -19,7 +19,7 @@ pipeline {
         }
     stage('Compile') {
       steps {
-        sh 'go build -a -buildvcs=false -installsuffix nocgo -o'
+        sh 'go build -a -buildvcs=false -installsuffix nocgo -o outfile.go'
            }
         }  
       
