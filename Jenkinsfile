@@ -12,20 +12,20 @@ pipeline {
         git 'https://github.com/michail-77/netology-devops/'
       }
     }
-    stage('Compile') {
-      steps {
-        sh 'go build'
-            }
-        }
     stage('Test') {
       steps {
         sh 'go test .'
             }
         }
-    stage('Nexus') {
+    stage('Compile') {
       steps {
-        sh 'curl -v -u admin:admin http://192.168.56.10:8081/repository/repo2/ --upload-file outfile.go'
-      }
-    }
+        sh 'go build'
+            }
+        }    
+#    stage('Nexus') {
+#      steps {
+#        sh 'curl -v -u admin:admin http://192.168.56.10:8081/repository/repo2/ --upload-file outfile.go'
+#      }
+#    }
   }
 }
