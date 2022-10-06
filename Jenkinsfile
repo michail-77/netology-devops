@@ -24,7 +24,7 @@ pipeline {
         }
     stage('Nexus') {
       steps {
-        sh 'curl -v -u admin:admin http://192.168.56.10:8081/repository/repo2/ --upload-file outfile.go'
+        sh 'curl -v -u admin:admin http://192.168.56.10:8081/#browse/browse:repo2 --upload-file outfile.go'
       }
     }
   }
