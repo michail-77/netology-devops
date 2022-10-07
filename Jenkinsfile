@@ -19,12 +19,12 @@ pipeline {
         }
     stage('Compile') {
       steps {
-        sh 'CGO_ENABLED=0 GOOS=linux go build -a -o netology-devops'
+        sh 'CGO_ENABLED=0 GOOS=linux go build -a -o netology-devops.go'
            }
         }  
     stage('Nexus') {
       steps {
-        sh 'curl -v -u admin:admin http://192.168.56.10:8081/repository/repo2/ --upload-file netology-devops'
+        sh 'curl -v -u admin:admin http://192.168.56.10:8081/repository/repo2/ --upload-file netology-devops.go'
        }
      }    
    }
